@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+	<%= @proposal %>
+</p>
+
+<p>
+<% if @proposal.matching.size > 0 %>
+	<% @proposal.matching.each do |m| %>
+		<%= "You can exchange with #{m.user} for #{m}!" %><br>
+	<% end %>
+<% end %> 
+</p>
+
+<%= link_to 'Edit', edit_proposal_path(@proposal) %> |
+<%= link_to 'Back', proposals_path %>

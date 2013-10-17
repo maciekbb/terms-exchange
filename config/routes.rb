@@ -1,5 +1,5 @@
 ExchangeSubject::Application.routes.draw do
-  resources :terms
+  resources :proposals
 
   get "welcome/index"
   devise_for :users
