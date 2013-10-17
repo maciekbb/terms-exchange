@@ -11,7 +11,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131017161016) do
+ActiveRecord::Schema.define(version: 20131017213219) do
+
+  create_table "days", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "proposals", force: true do |t|
+    t.integer  "term_id"
+    t.integer  "user_id"
+    t.boolean  "preferred"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "proposals", ["term_id"], name: "index_proposals_on_term_id"
+  add_index "proposals", ["user_id"], name: "index_proposals_on_user_id"
+
+  create_table "subjects", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "terms", force: true do |t|
+    t.time     "hour"
+    t.integer  "day_id"
+    t.integer  "subject_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "terms", ["day_id"], name: "index_terms_on_day_id"
+  add_index "terms", ["subject_id"], name: "index_terms_on_subject_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
