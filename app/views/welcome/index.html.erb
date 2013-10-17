@@ -1,0 +1,12 @@
+<h1>Welcome#index</h1>
+<p>Find me in app/views/welcome/index.html.erb</p>
+
+
+<p>
+	<% if signed_in? %>
+		You are signed in as <%= current_user.email %> |
+		<%= link_to 'Sign out', destroy_user_session_path, method: :delete %> 
+	<% else %>
+		<%= link_to 'Sign in', new_user_session_path %> 
+	<% end %>
+</p>
