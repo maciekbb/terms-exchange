@@ -16,7 +16,7 @@ class Subject < ActiveRecord::Base
 			potential_takers.each do |v|
 				v_terms_to_give = v.terms.find_by(subject: self, proposals: { preferred: false }) # q0
 				if u_terms_to_take.include?(v_terms_to_give)
-					matches << v.proposals.joins(:term).find_by(terms: { subject_id: self.id }, preferred: false)
+					matches << v.to_give(self)
 				end
 			end
 		end

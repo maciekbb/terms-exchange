@@ -1,5 +1,5 @@
 class ProposalsController < ApplicationController
-  before_action :set_proposal, only: [:show, :edit, :update, :destroy]
+  before_action :set_proposal, only: [:show, :edit, :update, :destroy, :accept]
   before_filter :authenticate_user!
 
   # GET /proposals
@@ -59,6 +59,15 @@ class ProposalsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to proposals_url }
       format.json { head :no_content }
+    end
+  end
+
+  def accept
+    @proposal.accepted_id = params[:accepted_id]
+    if @proposal.save
+      redirect_to proposals_path, notice: "Proposal was accepted."
+    else
+      redirect_to proposals_path, notice: "Something went wrong..."
     end
   end
 

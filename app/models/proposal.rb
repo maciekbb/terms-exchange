@@ -5,6 +5,8 @@ class Proposal < ActiveRecord::Base
   validate :one_proposal_for_term
   validate :one_not_preferred_proposal_for_subject
 
+  belongs_to :accepted, foreign_key: 'accepted_id', class_name: 'Proposal'
+
   def to_s
   	is_preferred = preferred ? "preferred" : "not preferred"
   	"#{term} (#{is_preferred})"

@@ -1,5 +1,9 @@
 ExchangeSubject::Application.routes.draw do
-  resources :proposals
+  resources :proposals do
+    member do
+      post 'accept'
+    end
+  end
 
   get "welcome/index"
   devise_for :users

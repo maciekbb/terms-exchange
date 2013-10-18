@@ -31,8 +31,23 @@
 
 <h1>Your matches</h1>
 
-<% current_user.subjects_to_exchange.each do |s| %>
-  <% s.match(current_user).each do |match| %>
-    <%= "Found #{match.term} with #{match.user}" %>
+<% Subject.all.each do |s| %>
+  <% to_give = current_user.to_give(s) %>
+  <% if to_give %>
+    <% s.match(current_user).each do |match| %>
+      <%= "Found #{match.term} with #{match.user}" -%> 
+      <% if to_give.accepted %>
+        <% if match.accepted == to_give %>
+          Terms exchenaged successfully!
+        <% else %>
+          (waiting for the other side acceptance...)
+        <% end %>
+      <% else %>
+        <%= form_tag accept_proposal_path(current_user.to_give(s)) do -%>
+          <%= hidden_field_tag :accepted_id, match.id %>
+          <%= submit_tag "accept" -%>
+        <% end %>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>
