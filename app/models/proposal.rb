@@ -13,13 +13,13 @@ class Proposal < ActiveRecord::Base
   delegate :subject, to: :term
 
   def one_proposal_for_term
-  	if user.proposals.where(term: term).count > 0
+  	if new_record? and user.proposals.where(term: term).count > 0
   		errors.add(:term, "is already occupied")
   	end
   end
 
   def one_not_preferred_proposal_for_subject
-  	if !preferred and user.proposals.joins(:term).where(preferred: false, terms: { subject_id: subject.id }).count > 0
+  	if new_record? and !preferred and user.proposals.joins(:term).where(preferred: false, terms: { subject_id: subject.id }).count > 0
   		errors.add(:term, "for this subject already exists one which is not preferred")
   	end
   end
