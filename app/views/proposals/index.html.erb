@@ -1,12 +1,10 @@
 <h1>Listing proposals</h1>
 
-<table>
+<table class="table table-bordered">
   <thead>
     <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Proposal</th>
+      <th>Options</th>
     </tr>
   </thead>
 
@@ -14,9 +12,9 @@
     <% @proposals.each do |proposal| %>
       <tr>
         <td><%= proposal %></td>
-        <td><%= link_to 'Show', proposal %></td>
-        <td><%= link_to 'Edit', edit_proposal_path(proposal) %></td>
-        <td><%= link_to 'Destroy', proposal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', proposal %> 
+        <%= link_to 'Edit', edit_proposal_path(proposal) %> 
+        <%= link_to 'Destroy', proposal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
