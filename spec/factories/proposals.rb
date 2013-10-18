@@ -9,11 +9,11 @@ FactoryGirl.define do
   end
 
   factory :day do
-  	name "monday"
+  	sequence(:name) { |n| "day #{n}" }
   end
 
   factory :term do
-  	hour "16:30"
+  	sequence(:hour) { |n| "#{n%13}:#{n%60}" }
   	day 
   	subject
   end

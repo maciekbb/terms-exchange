@@ -4,6 +4,16 @@ describe "Proposals" do
 	before(:each) do
 		user_login
 	end
+
+	let(:v) { FactoryGirl.create(:user) }
+	let(:s) { FactoryGirl.create(:subject) }
+	let(:t1) { FactoryGirl.create(:term, subject: s) }
+	let(:t2) { FactoryGirl.create(:term, subject: s) }
+
+	it "Can visit proposals site after login in" do
+		visit proposals_path
+		current_path.should eq proposals_path
+	end
 	
 	it "User should see added proposals" do
 		proposal = FactoryGirl.create(:proposal, reason: "Nonono", user: current_user)
@@ -15,7 +25,16 @@ describe "Proposals" do
 	it "User should not see others' proposals" do
 		proposal = FactoryGirl.create(:proposal, reason: "Nonono")
 		visit proposals_path
-		current_path.should eq proposals_path
 		page.should_not have_content proposal.reason
+	end
+
+	it "User see sugested exchanges when available" do
+		p0 = FactoryGirl.create(:proposal, user: current_user, term: t1, preferred: false)
+		p1 = FactoryGirl.create(:proposal, user: current_user, term: t2, preferred: true)
+		q0 = FactoryGirl.create(:proposal, user: v, term: t2, preferred: false)
+		q1 = FactoryGirl.create(:proposal, user: v, term: t1, preferred: true)
+
+		visit proposals_path
+		page.should have_content q0.term.to_s
 	end
 end

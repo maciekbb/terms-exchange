@@ -15,12 +15,4 @@ class User < ActiveRecord::Base
   	terms.map(&:subject).uniq
   end
 
-  def to_give(subject)
-  	proposals.joins(:term).find_by(terms: { subject_id: subject.id }, preferred: false)
-  end
-
-  def to_take(subject)
-
-  end
-
 end
