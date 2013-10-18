@@ -7,4 +7,6 @@ class Proposal < ActiveRecord::Base
   	"#{term} (#{is_preferred})"
   end
 
+  delegate :subject, to: :term
+
 end
