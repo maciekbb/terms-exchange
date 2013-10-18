@@ -4,10 +4,7 @@ class Proposal < ActiveRecord::Base
 
   def to_s
   	is_preferred = preferred ? "preferred" : "not preferred"
-  	"#{term} is #{is_preferred}"
+  	"#{term} (#{is_preferred})"
   end
 
-  def matching
-  	Proposal.where(term: term, preferred: !preferred).where.not(user: user)
-  end
 end

@@ -51,3 +51,12 @@ gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) support
 gem "twitter-bootstrap-rails"
 
 gem 'simple_form'
+
+group :development, :test do
+  gem 'rspec-rails', '~> 2.0'
+end
+
+group :test do
+	gem 'capybara'
+	gem 'factory_girl_rails'
+end

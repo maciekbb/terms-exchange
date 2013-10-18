@@ -3,7 +3,8 @@
 <table class="table table-bordered">
   <thead>
     <tr>
-      <th>Proposal</th>
+      <th>Term</th>
+      <th>Reason</th>
       <th>Options</th>
     </tr>
   </thead>
@@ -11,7 +12,8 @@
   <tbody>
     <% @proposals.each do |proposal| %>
       <tr>
-        <td><%= proposal %></td>
+        <td><%= proposal.term %></td>
+        <td><%= proposal.reason %></td>
         <td><%= link_to 'Show', proposal %> 
         <%= link_to 'Edit', edit_proposal_path(proposal) %> 
         <%= link_to 'Destroy', proposal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
