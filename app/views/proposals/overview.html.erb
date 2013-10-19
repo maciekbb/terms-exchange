@@ -1,0 +1,8 @@
+<table class="table table-bordered tabel-striped">
+	<% @matches.each do |m| %>
+	<tr>
+		<td><%= "#{m.user} #{m.term}" %></td>
+		<td><%= "#{m.accepted.user} #{m.accepted.term}" %></td>
+	</tr>
+	<% end %>
+</table>

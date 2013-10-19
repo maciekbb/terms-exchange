@@ -33,4 +33,8 @@ class Proposal < ActiveRecord::Base
     end
   end
 
+  def self.all_matches
+    select('a.*').from('proposals AS a').joins('inner join proposals AS b ON a.accepted_id = b.id and b.accepted_id = a.id and a.id > b.id')
+  end
+
 end

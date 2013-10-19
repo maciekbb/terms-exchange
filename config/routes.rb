@@ -4,6 +4,10 @@ ExchangeSubject::Application.routes.draw do
       post 'accept'
       post 'cancel'
     end
+
+    collection do
+      get 'overview'
+    end
   end
 
   get "welcome/index"

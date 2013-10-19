@@ -2,6 +2,8 @@ class ProposalsController < ApplicationController
   before_action :set_proposal, only: [:show, :edit, :update, :destroy, :accept, :cancel]
   before_filter :authenticate_user!
 
+  http_basic_authenticate_with name: "admin", password: "admin", only: :overview
+
   # GET /proposals
   # GET /proposals.json
   def index
@@ -78,6 +80,10 @@ class ProposalsController < ApplicationController
     else
       redirect_to proposals_path, notice: "Something went wrong..."
     end
+  end
+
+  def overview
+    @matches = Proposal.all_matches
   end
 
   private
