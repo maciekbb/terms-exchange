@@ -40,7 +40,7 @@
         <% if match.accepted == to_give %>
           Terms exchenaged successfully!
         <% else %>
-          (waiting for the other side acceptance...) <%= button_to "cancel", cancel_proposal_path(to_give), method: :post %>
+          (waiting for the other side acceptance...) <%= button_to "cancel", cancel_proposal_path(to_give), method: :post -%>
         <% end %>
       <% else %>
         <%= form_tag accept_proposal_path(to_give) do -%>
