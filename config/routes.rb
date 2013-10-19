@@ -2,6 +2,7 @@ ExchangeSubject::Application.routes.draw do
   resources :proposals do
     member do
       post 'accept'
+      post 'cancel'
     end
   end
 

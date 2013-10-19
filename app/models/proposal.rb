@@ -4,6 +4,7 @@ class Proposal < ActiveRecord::Base
 
   validate :one_proposal_for_term
   validate :one_not_preferred_proposal_for_subject
+  validate :one_accepted_for_subject
 
   belongs_to :accepted, foreign_key: 'accepted_id', class_name: 'Proposal'
 
@@ -24,6 +25,12 @@ class Proposal < ActiveRecord::Base
   	if !preferred and user.proposals.joins(:term).where(preferred: false, terms: { subject_id: subject.id }).where.not(id: id).count > 0
   		errors.add(:term, "for this subject already exists one which is not preferred")
   	end
+  end
+
+  def one_accepted_for_subject
+    if accepted_id and user.proposals.joins(:term).where(terms: { subject_id: subject.id }).where.not(id: id, accepted_id: nil).count > 0
+      errors.add(:term, "for this subject one term was already accepted")
+    end
   end
 
 end

@@ -28,37 +28,60 @@ describe "Proposals" do
 		page.should_not have_content proposal.reason
 	end
 
-	it "User see sugested exchanges when available, can accept it, can see when the other side accepts it" do
-		p0 = FactoryGirl.create(:proposal, user: current_user, term: t1, preferred: false)
-		p1 = FactoryGirl.create(:proposal, user: current_user, term: t2, preferred: true)
-		q0 = FactoryGirl.create(:proposal, user: v, term: t2, preferred: false)
-		q1 = FactoryGirl.create(:proposal, user: v, term: t1, preferred: true)
+	describe "acceptance and cancelling" do
+		let!(:p0) { FactoryGirl.create(:proposal, user: current_user, term: t1, preferred: false) }
+		let!(:p1) { FactoryGirl.create(:proposal, user: current_user, term: t2, preferred: true) }
+		let!(:q0) { FactoryGirl.create(:proposal, user: v, term: t2, preferred: false) }
+		let!(:q1) { FactoryGirl.create(:proposal, user: v, term: t1, preferred: true) }
 
-		visit proposals_path
-		page.should have_content q0.term.to_s
+		it "User see sugested exchanges when available, can accept it, can see when the other side accepts it" do
+			visit proposals_path
+			page.should have_content q0.term.to_s
 
-		click_on 'accept'
-		p0.reload.accepted.should eq q0
-		q0.reload.accepted.should be_nil
+			click_on 'accept'
+			p0.reload.accepted.should eq q0
+			q0.reload.accepted.should be_nil
 
-		current_path.should eq proposals_path
-		page.should have_content "waiting for"
+			current_path.should eq proposals_path
+			page.should have_content "waiting for"
 
 
-		# simulate the other side acceptance
-		q0.accepted = p0
-		q0.save!
+			# simulate the other side acceptance
+			q0.accepted = p0
+			q0.save!
 
-		visit proposals_path
-		current_path.should eq proposals_path
-		page.should have_content "exchenaged successfully"
-	end
+			visit proposals_path
+			current_path.should eq proposals_path
+			page.should have_content "exchenaged successfully"
+		end
 
-	describe "user can cancell his acceptance as long as the other side doesn't accept" do
-		
-	end
+		it "user can cancell his acceptance as long as the other side doesn't accept" do
+			visit proposals_path
+			page.should_not have_button "cancel"
 
-	it "User can't accept more than one match from certin subject" do
-		pending
+			p0.accepted = q0
+			p0.save!
+
+			visit proposals_path
+			page.should have_button "cancel"
+
+			q0.accepted = p0
+			q0.save!
+
+			visit proposals_path
+			page.should_not have_button "cancel"
+		end
+
+		it "user can cancell his acceptance" do
+			p0.accepted = q0
+			p0.save!
+
+			visit proposals_path
+			page.should have_button "cancel"
+
+			click_on "cancel"
+
+			p0.reload.accepted.should be_nil
+		end
 	end
 end

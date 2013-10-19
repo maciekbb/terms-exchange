@@ -40,10 +40,10 @@
         <% if match.accepted == to_give %>
           Terms exchenaged successfully!
         <% else %>
-          (waiting for the other side acceptance...)
+          (waiting for the other side acceptance...) <%= button_to "cancel", cancel_proposal_path(to_give), method: :post %>
         <% end %>
       <% else %>
-        <%= form_tag accept_proposal_path(current_user.to_give(s)) do -%>
+        <%= form_tag accept_proposal_path(to_give) do -%>
           <%= hidden_field_tag :accepted_id, match.id %>
           <%= submit_tag "accept" -%>
         <% end %>
